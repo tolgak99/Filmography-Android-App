@@ -7,23 +7,37 @@
     tools:context=".Activities.MainFilmListActivity"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/app_name_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textAlignment="center"
-        android:textSize="50dp"
-        android:background="@color/cardview_dark_background"></TextView>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/searchListImage"
+            android:layout_width="205dp"
+            android:layout_height="50dp"
+            android:background="#434141"
+            android:clickable="true"
+            app:srcCompat="@drawable/logo"></ImageView>
+
+        <ImageView
+            android:id="@+id/savedListImage"
+            android:layout_width="205dp"
+            android:layout_height="match_parent"
+            android:background="#393939"
+            android:clickable="true"
+            app:srcCompat="@android:drawable/ic_menu_save"></ImageView>
+
+    </LinearLayout>
 
     <EditText
-        android:text="@string/film_name_input"
         android:id="@+id/film_search_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        tools:ignore="SpeakableTextPresentCheck"
-        android:textAlignment="center"></EditText>
+        android:minHeight="48dp"
+        android:text="@string/film_name_input"
+        android:textAlignment="center"
+        tools:ignore="SpeakableTextPresentCheck"></EditText>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/film_list_recycleview"

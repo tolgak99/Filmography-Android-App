@@ -3,6 +3,8 @@ package com.example.filmapp.Entity;
 import android.os.Parcelable;
 import android.os.Parcelable.Creator;
 import android.os.Parcelable.Creator;
+import android.util.Log;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -47,6 +49,14 @@ public class Result implements Parcelable
         this.imdbID = ((String) in.readValue((String.class.getClassLoader())));
         this.type = ((String) in.readValue((String.class.getClassLoader())));
         this.poster = ((String) in.readValue((String.class.getClassLoader())));
+    }
+
+    protected Result(String title, String year, String imdbID, String type, String poster) {
+        this.title = title;
+        this.year = year;
+        this.imdbID = imdbID;
+        this.type = type;
+        this.poster = poster;
     }
 
     public Result() {

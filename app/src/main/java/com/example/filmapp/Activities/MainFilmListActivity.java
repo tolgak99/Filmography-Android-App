@@ -7,11 +7,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.filmapp.Adapter.FilmResultAdapter;
+import com.example.filmapp.Entity.DB;
 import com.example.filmapp.Entity.FilmResult;
 import com.example.filmapp.Entity.Result;
 import com.example.filmapp.Entity.TextValidator;
@@ -20,6 +23,7 @@ import com.example.filmapp.R;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.Call;
@@ -34,6 +38,9 @@ public class MainFilmListActivity extends AppCompatActivity {
     private EditText film_search_text;
     private String film_name = "inception";
 
+    private ImageView searchListImage;
+    private ImageView savedListImage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +48,8 @@ public class MainFilmListActivity extends AppCompatActivity {
 
         film_list_recyclerview = findViewById(R.id.film_list_recycleview);
         film_search_text = findViewById(R.id.film_search_text);
+        searchListImage = findViewById(R.id.searchListImage);
+        savedListImage = findViewById(R.id.savedListImage);
 
         film_search_text.addTextChangedListener(new TextValidator(film_search_text) {
             @Override public void validate(TextView textView, String text) {
@@ -48,8 +57,20 @@ public class MainFilmListActivity extends AppCompatActivity {
             }
         });
 
-        // Get Data From Network
-        getFilmListFromNetwork();
+
+        searchListImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getFilmListFromNetwork();
+            }
+        });
+
+        savedListImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GetFilmListFromSavedList();
+            }
+        });
 
     }
 
@@ -87,6 +108,20 @@ public class MainFilmListActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void GetFilmListFromSavedList()
+    {
+        ArrayList<Result> films = new ArrayList<Result>();
+        films = GetSavedListFromDB();
+
+        setAdapterRecyclerView(films);
+    }
+
+    private ArrayList<Result> GetSavedListFromDB()
+    {
+        DB db = DB.getInstance(this);
+        return db.getFilmList();
     }
 
     private void setAdapterRecyclerView(List<Result> resultList)

@@ -3,12 +3,16 @@ package com.example.filmapp.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.filmapp.Entity.DB;
 import com.example.filmapp.Entity.Result;
 import com.example.filmapp.R;
+
+import java.util.ArrayList;
 
 public class FilmDetailActivity extends AppCompatActivity {
 
@@ -42,7 +46,18 @@ public class FilmDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //saveData();
+                SaveToDB();
             }
         });
+    }
+
+    private void SaveToDB()
+    {
+        DB db = DB.getInstance(this);
+        db.AddNewItem(result.getTitle(),result.getYear(),result.getImdbID(),result.getType(), result.getPoster());
+
+        ArrayList<Result> films = new ArrayList<Result>();
+
+        films = db.getFilmList();
     }
 }
