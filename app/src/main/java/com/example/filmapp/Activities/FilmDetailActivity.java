@@ -27,6 +27,7 @@ public class FilmDetailActivity extends AppCompatActivity {
         TextView year_textview = findViewById(R.id.year_textview);;
         TextView type_textview = findViewById(R.id.type_textview);;
         Button save_button = findViewById(R.id.save_button);
+        Button delete_button = findViewById(R.id.delete_button);
 
         Bundle bundle = getIntent().getExtras();
 
@@ -49,6 +50,14 @@ public class FilmDetailActivity extends AppCompatActivity {
                 SaveToDB();
             }
         });
+
+        delete_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //saveData();
+                DeleteFromDB();
+            }
+        });
     }
 
     private void SaveToDB()
@@ -59,5 +68,11 @@ public class FilmDetailActivity extends AppCompatActivity {
         ArrayList<Result> films = new ArrayList<Result>();
 
         films = db.getFilmList();
+    }
+
+    private void DeleteFromDB()
+    {
+        DB db = DB.getInstance(this);
+        db.DeleteFilmFromDB(result.getTitle());
     }
 }

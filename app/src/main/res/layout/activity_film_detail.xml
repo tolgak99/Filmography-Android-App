@@ -39,14 +39,32 @@
         >
     </TextView>
 
-    <Button
-        android:id="@+id/save_button"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="save"
-        >
+        android:layout_weight="0.1"
+        android:orientation="horizontal">
 
-    </Button>
+        <Button
+            android:id="@+id/save_button"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:text="save">
+
+        </Button>
+
+        <Space
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2" />
+
+        <Button
+            android:id="@+id/delete_button"
+            android:layout_width="229dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Delete" />
+    </LinearLayout>
 
 </LinearLayout>

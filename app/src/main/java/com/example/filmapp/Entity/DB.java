@@ -110,4 +110,18 @@ public class DB extends SQLiteOpenHelper {
 
         return filmArrayList;
     }
+
+    public void DeleteFilmFromDB(String name)
+    {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+
+        sqLiteDatabase.delete( FILM_TABLE,"title= ? ",new String[]
+                {
+                        String.valueOf(name)
+                });
+
+        sqLiteDatabase.close();
+
+    }
+
 }
