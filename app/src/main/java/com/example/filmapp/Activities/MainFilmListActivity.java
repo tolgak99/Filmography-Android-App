@@ -36,7 +36,7 @@ public class MainFilmListActivity extends AppCompatActivity {
 
     private RecyclerView film_list_recyclerview;
     private EditText film_search_text;
-    private String film_name = "inception";
+    private String film_name = "Batman";
 
     private ImageView searchListImage;
     private ImageView savedListImage;
@@ -53,7 +53,9 @@ public class MainFilmListActivity extends AppCompatActivity {
 
         film_search_text.addTextChangedListener(new TextValidator(film_search_text) {
             @Override public void validate(TextView textView, String text) {
+
                 film_name = text;
+                getFilmListFromNetwork();
             }
         });
 

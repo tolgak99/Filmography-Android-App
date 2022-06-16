@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.filmapp.Activities.FilmDetailActivity;
 import com.example.filmapp.Entity.Result;
 import com.example.filmapp.R;
@@ -40,6 +42,12 @@ public class FilmResultAdapter extends RecyclerView.Adapter<FilmResultAdapter.Vi
         holder.degree_value_textview.setText(result.getType());
         holder.degree_textview.setText("Tür");
 
+        String imageURL = result.getPoster();
+        Glide.with(holder.film_poster)
+                .load(imageURL)
+                .fitCenter()
+                .into(holder.film_poster);
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,6 +66,7 @@ public class FilmResultAdapter extends RecyclerView.Adapter<FilmResultAdapter.Vi
         private TextView status_textview;
         private TextView degree_value_textview;
         private TextView degree_textview;
+        private ImageView film_poster;
 
         public ViewHolder(View v) {
             super(v);
@@ -65,6 +74,7 @@ public class FilmResultAdapter extends RecyclerView.Adapter<FilmResultAdapter.Vi
             status_textview = v.findViewById(R.id.status_textview);
             degree_value_textview = v.findViewById(R.id.degree_value_textview);
             degree_textview = v.findViewById(R.id.degree_textview);
+            film_poster = v.findViewById(R.id.image_view);
         }
     }
 

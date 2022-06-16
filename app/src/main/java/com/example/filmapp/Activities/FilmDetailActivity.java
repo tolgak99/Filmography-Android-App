@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.filmapp.Entity.DB;
 import com.example.filmapp.Entity.Result;
 import com.example.filmapp.R;
@@ -28,6 +30,7 @@ public class FilmDetailActivity extends AppCompatActivity {
         TextView type_textview = findViewById(R.id.type_textview);;
         Button save_button = findViewById(R.id.save_button);
         Button delete_button = findViewById(R.id.delete_button);
+        ImageView film_poster = findViewById(R.id.film_poster);
 
         Bundle bundle = getIntent().getExtras();
 
@@ -37,6 +40,13 @@ public class FilmDetailActivity extends AppCompatActivity {
             title_textview.setText(result.getTitle());
             year_textview.setText(result.getYear());
             type_textview.setText(result.getType());
+
+            String imageURL = result.getPoster();
+            Glide.with(film_poster)
+                    .load(imageURL)
+                    .fitCenter()
+                    .into(film_poster);
+
         }
 
         // Show result data at screen
