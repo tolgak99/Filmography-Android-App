@@ -2,6 +2,8 @@ package com.example.filmapp.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -58,6 +60,7 @@ public class FilmDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //saveData();
                 SaveToDB();
+                navigateMainFilmActivity(view.getContext());
             }
         });
 
@@ -66,6 +69,7 @@ public class FilmDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //saveData();
                 DeleteFromDB();
+                navigateMainFilmActivity(view.getContext());
             }
         });
     }
@@ -84,5 +88,11 @@ public class FilmDetailActivity extends AppCompatActivity {
     {
         DB db = DB.getInstance(this);
         db.DeleteFilmFromDB(result.getTitle());
+    }
+
+    private void navigateMainFilmActivity(Context context)
+    {
+        Intent intent = new Intent(context, MainFilmListActivity.class);
+        context.startActivity(intent);
     }
 }

@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -37,6 +39,7 @@ public class MainFilmListActivity extends AppCompatActivity {
     private RecyclerView film_list_recyclerview;
     private EditText film_search_text;
     private String film_name = "Batman";
+    private Button search_button;
 
     private ImageView searchListImage;
     private ImageView savedListImage;
@@ -50,15 +53,33 @@ public class MainFilmListActivity extends AppCompatActivity {
         film_search_text = findViewById(R.id.film_search_text);
         searchListImage = findViewById(R.id.searchListImage);
         savedListImage = findViewById(R.id.savedListImage);
+        search_button = findViewById(R.id.search_button);
 
-        film_search_text.addTextChangedListener(new TextValidator(film_search_text) {
+        hideDeafultAppBar();
+
+        /*film_search_text.addTextChangedListener(new TextValidator(film_search_text) {
             @Override public void validate(TextView textView, String text) {
 
                 film_name = text;
                 getFilmListFromNetwork();
             }
-        });
+        });*/
 
+        film_name = getFilmNameFromLocalData();
+        if (film_name != null)
+            getFilmListFromNetwork();
+
+        search_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                film_name = film_search_text.getText().toString();
+                if (film_name != null)
+                {
+                    saveFilmNameData(film_name);
+                    getFilmListFromNetwork();
+                }
+            }
+        });
 
         searchListImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,6 +133,25 @@ public class MainFilmListActivity extends AppCompatActivity {
         });
     }
 
+    private void saveFilmNameData(String name)
+    {
+        // Save Data
+        String CONST_DATA = "FILM_NAME";
+        SharedPreferences preferences = this.getSharedPreferences(CONST_DATA, getApplicationContext().MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(CONST_DATA,name);
+        editor.apply();
+    }
+
+    private String getFilmNameFromLocalData()
+    {
+        String result;
+        String CONST_DATA = "FILM_NAME";
+        SharedPreferences preferences = this.getSharedPreferences(CONST_DATA, getApplicationContext().MODE_PRIVATE);
+        result = preferences.getString(CONST_DATA, "Batman");
+        return result;
+    }
+
     private void GetFilmListFromSavedList()
     {
         ArrayList<Result> films = new ArrayList<Result>();
@@ -132,6 +172,11 @@ public class MainFilmListActivity extends AppCompatActivity {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         film_list_recyclerview.setLayoutManager(mLayoutManager);
         film_list_recyclerview.setAdapter(adapter);
+    }
+
+    void hideDeafultAppBar()
+    {
+        getSupportActionBar().hide();
     }
 
 }

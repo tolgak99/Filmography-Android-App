@@ -29,15 +29,28 @@
 
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/film_search_text"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:minHeight="48dp"
-        android:text="@string/film_name_input"
-        android:textAlignment="center"
-        tools:ignore="SpeakableTextPresentCheck"></EditText>
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/film_search_text"
+            android:layout_width="299dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:minHeight="48dp"
+            android:text="@string/film_name_input"
+            android:textAlignment="center"
+            tools:ignore="SpeakableTextPresentCheck"></EditText>
+
+        <Button
+            android:id="@+id/search_button"
+            android:layout_width="141dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Search" />
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/film_list_recycleview"
