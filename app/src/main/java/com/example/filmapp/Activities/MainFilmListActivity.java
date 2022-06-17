@@ -2,6 +2,8 @@ package com.example.filmapp.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,6 +23,7 @@ import com.example.filmapp.Entity.FilmResult;
 import com.example.filmapp.Entity.Result;
 import com.example.filmapp.Entity.TextValidator;
 import com.example.filmapp.Entity.Validation;
+import com.example.filmapp.Fragments.FilmFragment;
 import com.example.filmapp.R;
 import com.google.gson.Gson;
 
@@ -43,6 +46,9 @@ public class MainFilmListActivity extends AppCompatActivity {
 
     private ImageView searchListImage;
     private ImageView savedListImage;
+    private ImageView rateImage;
+
+    private boolean isFragmentDisplayed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +60,7 @@ public class MainFilmListActivity extends AppCompatActivity {
         searchListImage = findViewById(R.id.searchListImage);
         savedListImage = findViewById(R.id.savedListImage);
         search_button = findViewById(R.id.search_button);
+        rateImage = findViewById(R.id.rate_image);
 
         hideDeafultAppBar();
 
@@ -92,6 +99,17 @@ public class MainFilmListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 GetFilmListFromSavedList();
+            }
+        });
+
+        rateImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!isFragmentDisplayed) {
+                    displayFragment();
+                } else {
+                    closeFragment();
+                }
             }
         });
 
@@ -172,6 +190,41 @@ public class MainFilmListActivity extends AppCompatActivity {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         film_list_recyclerview.setLayoutManager(mLayoutManager);
         film_list_recyclerview.setAdapter(adapter);
+    }
+
+    public void displayFragment() {
+        FilmFragment simpleFragment = FilmFragment.newInstance();
+        // Get the FragmentManager and start a transaction.
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager
+                .beginTransaction();
+        // Add the SimpleFragment.
+        fragmentTransaction.add(R.id.fragment_container,
+                simpleFragment).addToBackStack(null).commit();
+
+        //mButton.setText(R.string.close);
+
+        isFragmentDisplayed = true;
+    }
+
+    public void closeFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        FilmFragment simpleFragment = (FilmFragment) fragmentManager
+                .findFragmentById(R.id.fragment_container);
+
+        if (simpleFragment != null) {
+            // Create and commit the transaction to remove the fragment.
+            FragmentTransaction fragmentTransaction =
+                    fragmentManager.beginTransaction();
+            fragmentTransaction.remove(simpleFragment).commit();
+        }
+        // Update the Button text.
+        //mButton.setText(R.string.open);
+        // Set boolean flag to indicate fragment is closed.
+        isFragmentDisplayed = false;
+
+
     }
 
     void hideDeafultAppBar()

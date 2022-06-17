@@ -46,6 +46,7 @@ public class FilmResultAdapter extends RecyclerView.Adapter<FilmResultAdapter.Vi
         Glide.with(holder.film_poster)
                 .load(imageURL)
                 .fitCenter()
+                .override(500)
                 .into(holder.film_poster);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

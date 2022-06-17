@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">FilmApp</string>
     <string name="film_name_input">Search Film</string>
+    <string name="question_article">Rate US!</string>
+    <string name="yes_message">Yes</string>
+    <string name="no_message">No</string>
 </resources>
